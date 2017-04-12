@@ -6,22 +6,19 @@ LIC_FILES_CHKSUM = " \
 
 inherit liri
 
-SRC_URI += "file://0001-remove-Werror-from-build-flags.patch"
-PV = "0.9.0+git${SRCPV}"
-SRCREV = "554a83ea46ff1db9c11f89654777911f984c6b16"
+FLUID_GIT_BRANCH ?= "develop"
+SRC_URI = "git://github.com/lirios/fluid.git;branch=${FLUID_GIT_BRANCH}"
+
+PV = "0.10.0+git${SRCPV}"
+SRCREV = "5e7f3c59cbe3b6339e3225b533dd11bd61368a8e"
 S = "${WORKDIR}/git"
 
+# TODO: Add ttf-roboto
 DEPENDS += " \
     qtgraphicaleffects \
     qtquickcontrols2 \
     qtsvg \
 "
 
-do_configure_prepend() {
-    (cd ${S} && ./scripts/fetch_icons.sh)
-}
-
-FILES_${PN} += "${OE_QMAKE_PATH_QML}"
-FILES_${PN}-dev += " \
-    ${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs \
-"
+QBS_BUILD_PROPERTIES = "qbsbuildconfig.withDocumentation:false"
+QBS_INSTALL_PROPERTIES = "${QBS_BUILD_PROPERTIES}"

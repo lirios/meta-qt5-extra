@@ -1,13 +1,14 @@
 SUMMARY = "Themes for a uniform look throughout Liri OS"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = " \
-	file://LICENSE.GPLv3;md5=d32239bcb673463ab874e80d47fae504 \
+    file://LICENSE.GPLv3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-inherit liri
+inherit liribase
 
-PV = "0.9.0+git${SRCPV}"
+SRC_URI = "git://github.com/lirios/themes.git;branch=${LIRI_GIT_BRANCH}"
 
+PV = "0.10.0+git${SRCPV}"
 SRCREV = "884d5faa15f53627c3ca2e3f2e5872e7b157ef25"
 S = "${WORKDIR}/git"
 
@@ -24,6 +25,8 @@ RDEPENDS_${PN}-plymouth += " \
 RDEPENDS_${PN}-sddm += " \
     liri-shell \
 "
+
+QBS_PROJECT = "${S}/themes.qbs"
 
 FILES_${PN}-grub += "/boot/grub/themes"
 FILES_${PN}-plymouth += "${datadir}/plymouth/themes"

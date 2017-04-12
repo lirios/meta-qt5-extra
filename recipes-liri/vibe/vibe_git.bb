@@ -8,12 +8,15 @@ inherit liri distro_features_check
 
 REQUIRED_DISTRO_FEATURES = "pulseaudio"
 
-SRC_URI += "file://0001-remove-Werror-from-build-flags.patch"
+VIBE_GIT_BRANCH ?= "develop"
+SRC_URI = "git://github.com/lirios/vibe.git;branch=${VIBE_GIT_BRANCH}"
+
 PV = "0.9.0+git${SRCPV}"
-SRCREV = "8a2163a38d324869a247a103e65848f76ab1c432"
+SRCREV = "41b0908d7376860f90b09204d08c89ff0fee9adc"
 S = "${WORKDIR}/git"
 
 DEPENDS += " \
+    qtdeclarative \
     solid \
     kwallet \
     networkmanager-qt \
@@ -21,14 +24,8 @@ DEPENDS += " \
     networkmanager \
     modemmanager \
     pulseaudio \
-    libqtxdg \
     fluid \
+    libliri \
 "
 
 RDEPENDS_${PN} += "pulseaudio-server"
-
-FILES_${PN} += "${OE_QMAKE_PATH_QML}"
-
-RREPLACES_${PN} = "libhawaii"
-RPROVIDES_${PN} = "libhawaii"
-RCONFLICTS_${PN} = "libhawaii"

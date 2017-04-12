@@ -1,28 +1,29 @@
-SUMMARY = "LIRI Web browser"
+SUMMARY = "Liri Web browser"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = " \
-	file://LICENSE.GPLv3;md5=8f0e2cd40e05189ec81232da84bd6e1a \
+    file://LICENSE.GPLv3;md5=8f0e2cd40e05189ec81232da84bd6e1a \
 "
 
 inherit qmake5
 
-PV = "0.0.0+git${SRCPV}"
+LIRI_BROWSER_GIT_BRANCH ?= "develop"
+SRC_URI = "git://github.com/lirios/browser.git;branch=${LIRI_BROWSER_GIT_BRANCH}"
 
-SRC_URI = "git://github.com/lirios/browser.git;branch=develop"
+PV = "0.0.0+git${SRCPV}"
 SRCREV = "4f27d0b1abb85ad0166482128570b158c3b446aa"
 S = "${WORKDIR}/git"
 
 DEPENDS += " \
     qtdeclarative \
     qtquickcontrols2 \
+    qtwebengine \
     fluid \
 "
 
-do_configure_prepend() {
-    export PREFIX=${prefix}
-}
+EXTRA_QMAKEVARS_PRE_append = " LIRI_INSTALL_PREFIX=/usr CONFIG+=use_qt_paths"
 
-# No links -> runtime dependency
-RDEPENDS_${PN} += " \
-    slime-engine \
+FILES_${PN} += " \
+    ${OE_QMAKE_PATH_DATA}/icons/ \
+    ${OE_QMAKE_PATH_DATA}/applications/ \
+    ${OE_QMAKE_PATH_DATA}/appdata/ \
 "

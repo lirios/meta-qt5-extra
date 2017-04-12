@@ -1,33 +1,30 @@
 SUMMARY = "Responsive shell for Liri OS"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = " \
-	file://LICENSE.GPLv3;md5=d32239bcb673463ab874e80d47fae504 \
+    file://LICENSE.GPLv3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
 inherit liri systemd pythonnative distro_features_check
 
 REQUIRED_DISTRO_FEATURES = "wayland pam"
 
-SRC_URI += " \
-    file://0001-find-host-s-git.patch \
-    file://0002-remove-Werror-from-build-flags.patch \
-"
+SRC_URI = "git://github.com/lirios/shell.git;branch=${LIRI_GIT_BRANCH}"
+
 PV = "0.9.0+git${SRCPV}"
-SRCREV = "9f5ed08fe14820e6f5e03b91410dd280f3678430"
+SRCREV = "e3e27bec06546cac71d2ec2d3f74757cc9478e7e"
 S = "${WORKDIR}/git"
 
 DEPENDS += " \
     qtwayland-native \
     qtaccountsservice \
     libpam \
+    libqtxdg \
     vibe \
     liri-wayland \
     liri-workspace \
 "
 
-EXTRA_OECMAKE += " \
-    -DSYSTEMD_USER_UNIT_DIR=${systemd_system_unitdir} \
-"
+QBS_PROJECT = "${S}/shell.qbs"
 
 SYSTEMD_SERVICE_${PN} = "liri.service"
 
@@ -42,15 +39,7 @@ RRECOMMENDS_${PN} += " \
 "
 
 FILES_${PN} += " \
-    ${datadir} \
     ${systemd_unitdir} \
-    ${OE_QMAKE_PATH_QML}/Liri \
-    ${OE_QMAKE_PATH_PLUGINS} \
-"
-
-FILES_${PN}-dbg += " \
-    ${OE_QMAKE_PATH_PLUGINS}/.debug \
-    ${OE_QMAKE_PATH_QML}/Liri/*/.debug \
 "
 
 RREPLACES_${PN} = "hawaii-shell"

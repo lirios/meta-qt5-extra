@@ -6,13 +6,17 @@ LIC_FILES_CHKSUM = " \
 
 inherit liri
 
-SRC_URI += "file://0001-remove-Werror-from-build-flags.patch"
+QTACCOUNTSSERVICE_GIT_BRANCH ?= "develop"
+SRC_URI = "git://github.com/lirios/qtaccountsservice.git;branch=${QTACCOUNTSSERVICE_GIT_BRANCH}"
+
 PV = "0.7.0+git${SRCPV}"
-SRCREV = "b1440d98c272cc1890378f44baa4631a8afb40db"
+SRCREV = "992f8e0f1d0c47a14ac5fb2b28a1d418c387d502"
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "${OE_QMAKE_PATH_QML}/QtAccountsService"
-FILES_${PN}-dbg += "${OE_QMAKE_PATH_QML}/QtAccountsService/.debug"
+DEPENDS += " \
+    qtdeclarative \
+"
 
-CMAKE_ALIGN_SYSROOT[1] = "QtAccountsService, -S${includedir}, -s${CMAKE_QT5_EX_PATH_HOST_HEADERS}"
-CMAKE_ALIGN_SYSROOT[2] = "QtAccountsService, -S${libdir}/lib, -s${OE_QMAKE_PATH_HOST_LIBS}/lib"
+#RDEPENDS = " \
+#    accountsservice \
+#"

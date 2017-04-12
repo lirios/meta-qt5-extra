@@ -1,25 +1,18 @@
-SUMMARY = "LIRI Calculator"
+SUMMARY = "Liri Calculator"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = " \
-	file://LICENSE;md5=8f0e2cd40e05189ec81232da84bd6e1a \
+    file://LICENSE.GPLv3;md5=8f0e2cd40e05189ec81232da84bd6e1a \
 "
 
-inherit qmake5
+inherit liri
 
-PV = "0.0.0+git${SRCPV}"
+LIRI_CALCULATOR_GIT_BRANCH ?= "develop"
+SRC_URI = "git://github.com/lirios/calculator.git;branch=${LIRI_CALCULATOR_GIT_BRANCH}"
 
-SRC_URI = "git://github.com/lirios/calculator.git"
-SRCREV = "b86e70b2e408004408459349db3a7f1a7316570a"
+PV = "1.0.0+git${SRCPV}"
+SRCREV = "a9c2393fb712b3fab8b7d5a9d27071b8f9c10363"
 S = "${WORKDIR}/git"
 
 DEPENDS += " \
-    qtdeclarative \
-    qtquickcontrols2 \
     fluid \
 "
-
-# don't share ideas where to install binary
-do_install() {
-    install -d ${D}/${bindir}
-    install -m 0755 ${B}/liri-calculator ${D}/${bindir}/
-}

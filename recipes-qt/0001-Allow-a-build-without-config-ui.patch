@@ -1,0 +1,22 @@
+From 1912b067e9a535f21868f3f67460c7a242fdec39 Mon Sep 17 00:00:00 2001
+From: Pier Luigi Fiorini <pierluigi.fiorini@liri.io>
+Date: Sat, 13 May 2017 19:56:20 +0200
+Subject: [PATCH] Allow a build without config ui
+
+---
+ src/app/app.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/app/app.pro b/src/app/app.pro
+index bfa68615..eb51a3a1 100644
+--- a/src/app/app.pro
++++ b/src/app/app.pro
+@@ -7,4 +7,4 @@ SUBDIRS =\
+     config \
+     qbs-qmltypes
+ 
+-!isEmpty(QT.widgets.name):SUBDIRS += config-ui
++qbs_enable_config_ui:SUBDIRS += config-ui
+-- 
+2.12.2
+
